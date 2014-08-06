@@ -12,7 +12,7 @@ app.post('/textIn', function(req, res){
   var input = req.body['Body'].split(' ');
   if(input[0] === 'SUBSCRIBE') {
     textFunctions.subscribe(req, res, input);
-  } else if(input[0] === 'UNSUBSCRIBE') {
+  } else if(input[0] === 'FUCKOFF') {
     textFunctions.unSubscribe(req, res, input);
   } else {
     textFunctions.globalSend(req, res, input);
