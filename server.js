@@ -1,8 +1,9 @@
-var express    = require('express');
+var express = require('express');
+var fs = require('fs');
 var bodyParser = require('body-parser');
-var mongoose   = require('mongoose');
+var mongoose = require('mongoose');
 var textFunctions = require('./lib/textFunctions');
-var app        = express();
+var app = express();
 
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost:27017/pax-watch');
 
@@ -17,6 +18,17 @@ app.post('/textIn', function(req, res){
   } else {
     textFunctions.globalSend(req, res, input);
   }
+});
+
+app.get('/style.css', function(req, res) {
+  res.set('Content-Type', 'text/css');
+  var readStream = fs.createReadStream('./static/style.css');
+  readStream.pipe(res);
+});
+
+app.get('*', function(req, res) {
+  var readStream = fs.createReadStream('./static/welcome.html');
+  readStream.pipe(res);
 });
 
 app.set('port', process.env.PORT || 3000);
